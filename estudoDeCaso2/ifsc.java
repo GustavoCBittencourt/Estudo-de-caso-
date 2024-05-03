@@ -89,7 +89,8 @@ class SistemaBancario {
             System.out.println("2. Sacar");
             System.out.println("3. Ver saldo");
             System.out.println("4. Sair");
-
+            //talvez colocar mais opções 
+		
             int escolha = scanner.nextInt();
 
             switch (escolha) {
@@ -115,4 +116,3 @@ class SistemaBancario {
         }
     }
 }
-
