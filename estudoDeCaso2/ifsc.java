@@ -11,6 +11,7 @@ class ContaBancaria {
         this.setNumeroConta(numeroConta);
         this.saldo = saldoInicial;
         this.setCliente(cliente);
+	//valores dos atributos
     }
 
     public void depositar(double valor) {
@@ -33,6 +34,7 @@ class ContaBancaria {
 
 	public String getNumeroConta() {
 		return numeroConta;
+	//acessa os atributos da classe 
 	}
 
 	public void setNumeroConta(String numeroConta) {
@@ -89,7 +91,7 @@ class SistemaBancario {
             System.out.println("2. Sacar");
             System.out.println("3. Ver saldo");
             System.out.println("4. Sair");
-            
+            //entra em um loop
 		
             int escolha = scanner.nextInt();
 
@@ -112,6 +114,7 @@ class SistemaBancario {
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
+		// o loop continua até o usuario escolher sair
             }
         }
     }
