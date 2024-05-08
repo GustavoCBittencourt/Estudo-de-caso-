@@ -1,17 +1,14 @@
-package estudoDeCaso2;
-
 import java.util.Scanner;
 
-class ContaBancaria {
-    private String numeroConta;
-    private double saldo;
-    private Cliente cliente;
+class Conta {
+    protected String numeroConta;
+    protected double saldo;
+    protected Cliente cliente;
 
-    public ContaBancaria(String numeroConta, double saldoInicial, Cliente cliente) {
-        this.setNumeroConta(numeroConta);
+    public Conta(String numeroConta, double saldoInicial, Cliente cliente) {
+        this.numeroConta = numeroConta;
         this.saldo = saldoInicial;
-        this.setCliente(cliente);
-	//valores dos atributos
+        this.cliente = cliente;
     }
 
     public void depositar(double valor) {
@@ -31,23 +28,39 @@ class ContaBancaria {
     public void exibirSaldo() {
         System.out.println("Saldo disponível: " + saldo);
     }
+}
 
-	public String getNumeroConta() {
-		return numeroConta;
-	//acessa os atributos da classe 
-	}
+class ContaCorrente extends Conta {
+    private double limiteChequeEspecial;
 
-	public void setNumeroConta(String numeroConta) {
-		this.numeroConta = numeroConta;
-	}
+    public ContaCorrente(String numeroConta, double saldoInicial, Cliente cliente, double limiteChequeEspecial) {
+        super(numeroConta, saldoInicial, cliente);
+        this.limiteChequeEspecial = limiteChequeEspecial;
+    }
 
-	public Cliente getCliente() {
-		return cliente;
-	}
+    @Override
+    public void sacar(double valor) {
+        if (valor <= saldo + limiteChequeEspecial) {
+            saldo -= valor;
+            System.out.println("Saque de " + valor + " realizado com sucesso.");
+        } else {
+            System.out.println("Saldo insuficiente.");
+        }
+    }
+}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+class ContaPoupanca extends Conta {
+    private double taxaRendimento;
+
+    public ContaPoupanca(String numeroConta, double saldoInicial, Cliente cliente, double taxaRendimento) {
+        super(numeroConta, saldoInicial, cliente);
+        this.taxaRendimento = taxaRendimento;
+    }
+
+    public void calcularRendimento() {
+        saldo += saldo * taxaRendimento;
+        System.out.println("Rendimento aplicado com sucesso.");
+    }
 }
 
 class Cliente {
@@ -83,7 +96,7 @@ class SistemaBancario {
         String numeroConta = scanner.nextLine();
         System.out.print("Digite o saldo inicial da conta: ");
         double saldoInicial = scanner.nextDouble();
-        ContaBancaria conta = new ContaBancaria(numeroConta, saldoInicial, cliente);
+        ContaCorrente conta = new ContaCorrente(numeroConta, saldoInicial, cliente, 500); // Definindo um limite de cheque especial de 500
 
         while (true) {
             System.out.println("\nMenu:");
@@ -91,8 +104,7 @@ class SistemaBancario {
             System.out.println("2. Sacar");
             System.out.println("3. Ver saldo");
             System.out.println("4. Sair");
-            //entra em um loop
-		
+
             int escolha = scanner.nextInt();
 
             switch (escolha) {
@@ -114,7 +126,6 @@ class SistemaBancario {
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
-		// o loop continua até o usuario escolher sair
             }
         }
     }
